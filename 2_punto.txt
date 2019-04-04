@@ -1,0 +1,7 @@
+CREATE TABLE productos(id_prod int not null,nom_prod varchar(50) not null,canti_stock int not null,fecha_pedida date not null,total_ganancias int not null,canti_ventas_prod int not null, canti_compras_prod int not null, FOREIGN KEY (canti_ventas_prod) REFERENCES ventas(canti_ventas), FOREIGN KEY (canti_compras_prod) REFERENCES compras(canti_compras));
+
+CREATE TABLE ventas(canti_ventas int primary key not null, valor_ventas int not null, total_ventas int not null,fecha_compras date not null);
+
+CREATE TABLE compras(canti_compras int primary key not null, valor_compras int not null, total_compras int not null, fecha_compras date not null);
+
+SELECT id_prod, nom_prod, canti_stock,total_ventas,total_compras,total_ganancias FROM productos INNER JOIN ventas ON (canti_ventas_prod = canti_ventas) INNER JOIN compras ON (canti_compras_prod = canti_compras) WHERE total_ventas = (valor_ventas * canti_ventas) OR total_compras = (valor_compras * canti_compras) OR total_ganancias =(total_compras-total_ventas) OR (fecha_pedida > '2018/10/05');
